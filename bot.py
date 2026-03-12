@@ -1,29 +1,29 @@
 import discord
-import bot2_logic
-bl = bot2_logic
+import bot2_4
+from discord.ext import commands
+bl = bot2_4
 # La variable intents almacena los privilegios del bot
 intents = discord.Intents.default()
 # Activar el privilegio de lectura de mensajes
 intents.message_content = True
 # Crear un bot en la variable cliente y transferirle los privilegios
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="$", intents=intents)
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'Hemos iniciado sesión como {client.user}')
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('$hola'):
-        await message.channel.send("Hola!")
-    elif message.content.startswith('$bye'):
-        await message.channel.send("👋")
-    elif message.content.startswith('$password'):
-        await message.channel.send(bl.gen_pass(10))
-    elif message.content.startswith("$tirar moneda"):
-        await message.channel.send(bl.tirar_moneda())
-    elif message.content.startswith("$d"):
-        await message.channel.send("$")
-    else:
-        None
+    print(f'Hemos iniciado sesión como {bot.user}')
+@bot.command()
+async def hello(ctx):
+    await ctx.send("hi")
+@bot.command()
+async def bye(ctx):
+    await ctx.send("👋")
+@bot.command()
+async def password(ctx):
+    await ctx.send(bl.gen_pass(10))
+@bot.command()
+async def tirarmoneda(ctx):
+    await ctx.send(bl.tirar_moneda())
+@bot.command()
+async def he(ctx):
+    await ctx.send("he")
